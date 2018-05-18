@@ -3,6 +3,8 @@ require 'json'
 require 'octokit'
 require 'date'
 
+set :port, 80
+
 ACCESS_TOKEN = ENV['SITONIT_ACCESS_TOKEN']
 # Time until mergable in minutes
 TIME_TO_MERGE_MINUTES = 2
