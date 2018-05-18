@@ -27,6 +27,10 @@ before do
     @running = true
 end
 
+get '/' do
+    'SitOnIt!'
+end
+
 post '/event_handler' do
     @payload = JSON.parse(params[:payload])
   
