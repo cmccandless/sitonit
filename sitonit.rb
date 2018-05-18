@@ -3,7 +3,7 @@ require 'json'
 require 'octokit'
 require 'date'
 
-set :port, 80
+set :port, ENV['PORT'].to_i
 
 ACCESS_TOKEN = ENV['SITONIT_ACCESS_TOKEN']
 # Time until mergable in minutes
