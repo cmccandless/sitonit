@@ -1,1 +1,1 @@
-web: bundle exec ruby sitonit.rb
+web: bundle exec thin start -p $PORT
