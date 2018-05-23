@@ -147,6 +147,7 @@ helpers do
                     ) / 24.0 +
                     config.fetch('days', config.fetch('day', 0)).to_f
                 )
+                created = DateTime.strptime(pull_request['updated_at']) if config.fetch('reset_on_update', false)
                 target = created + days
                 merge_on_fail = config.fetch('merge_on_fail', true)
             else
