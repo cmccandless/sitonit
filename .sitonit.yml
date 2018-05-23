@@ -1,5 +1,5 @@
-config:
-  - minutes: 1
-  - hours: 1
-  - days: 1
-  - merge_on_fail: true
+minutes: 1
+hours: 1
+days: 1
+
+merge_on_fail: true
