@@ -12,7 +12,6 @@ use Rack::Session::Cookie, :secret => rand.to_s()
 set :port, ENV['PORT'].to_i
 
 APP_ID = ENV['SITONIT_APP_ID']
-ACCESS_TOKEN = ENV['SITONIT_ACCESS_TOKEN']
 CLIENT_ID = ENV['SITONIT_CLIENT_ID']
 CLIENT_SECRET = ENV['SITONIT_CLIENT_SECRET']
 PRIVATE_KEY = OpenSSL::PKey::RSA.new(ENV['SITONIT_PRIVATE_KEY'])
@@ -34,50 +33,11 @@ Signal.trap('TERM') {
 
 
 before do
-end
-
-def authenticated?
-    session[:access_token]
-end
-
-def authenticate!
-    @client = Octokit::Client.new :client_id => CLIENT_ID, :client_secret => CLIENT_SECRET
-    url = @client.authorize_url CLIENT_ID, :scope => 'public_repo'
-
-    redirect url
+    # init here
 end
 
 get '/' do
-    if !authenticated?
-        authenticate!
-    else
-        access_token = session[:access_token]
-        scopes = []
-        @client = Octokit::Client.new :client_id => CLIENT_ID, :client_secret => CLIENT_SECRET
-
-        begin
-            @client.check_application_authorization access_token
-        rescue => e
-        # request didn't succeed because the token was revoked so we
-        # invalidate the token stored in the session and render the
-        # index page so that the user can start the OAuth flow again
-            session[:access_token] = nil
-            return authenticate!
-        end
-
-        @client = Octokit::Client.new :access_token => access_token
-        data = client.user
-
-        erb :email, {:locals => data.to_attrs}
-    end
-end
-
-get '/callback' do
-    session_code = request.env['rack.request.query_hash']['code']
-    result = Octokit.exchange_code_for_token(session_code, CLIENT_ID, CLIENT_SECRET)
-    session[:access_token] = result[:access_token]
-
-    redirect '/'
+    redirect 'https://github.com/cmccandless/sitonit'
 end
 
 post '/event_handler' do
