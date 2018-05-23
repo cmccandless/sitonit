@@ -126,7 +126,7 @@ helpers do
         repo = pull_request['base']['repo']['full_name']
         ref = pull_request['head']['sha']
         loop do
-            created = DateTime.strptime(pull_request['updated_at'])
+            created = DateTime.strptime(pull_request['created_at'])
             listing = @client.contents(repo, :ref => ref).collect { |f| f[:name] }
             target = created
             merge_on_fail = true
