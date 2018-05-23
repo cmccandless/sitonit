@@ -2,6 +2,10 @@
 
 A GitHub CI service that requires a minimum amount of time to pass before a pull request can be merged.
 
+![screenshot showing Pending commit status](/screenshots/pending.png)
+
+![screenshot showing Passed commit status](/screenshots/passed.png)
+
 ## Setup
 
 1. Install App at https://github.com/apps/sitonit-ci
