@@ -120,7 +120,7 @@ helpers do
     end
 
     def process_pull_request(pull_request, installation)
-        puts "Processing pull request..."
+        # puts "Processing pull request..."
         @client = github_client(installation["id"])
         context = "continuous-integration/SitOnIt"
         repo = pull_request['base']['repo']['full_name']
@@ -140,7 +140,6 @@ helpers do
                     puts "unknown encoding #{contents[:encoding]}"
                 end
                 config = YAML.load(body)
-                puts "config: #{config}"
                 days = (
                     (
                         (config.fetch('minutes', 0).to_f / 60.0) + 
@@ -148,17 +147,12 @@ helpers do
                     ) / 24.0 +
                     config.fetch('days', 0).to_f
                 )
-                puts days
                 target = created + days
                 merge_on_fail = config.fetch('merge_on_fail', true)
             else
                 target = created + TIME_TO_MERGE_DAYS
             end
             time_needed = target - DateTime.now
-            puts "created_at: #{created}"
-            puts "mergable at: #{target}"
-            puts "now: #{DateTime.now}"
-            puts "time_needed: #{time_needed}"
             break if time_needed <= 0
             units = "days"
             if time_needed < 1
@@ -171,7 +165,7 @@ helpers do
             end
             description = "This PR needs #{time_needed.round(0)} more #{units}."
             @client.create_status(repo, ref, 'pending', :context => context, :description => description)
-            puts "#{repo}/#{pull_request['head']['sha']}: #{description}"
+            # puts "#{repo}/#{pull_request['head']['sha']}: #{description}"
             if GLOBAL[:running]
                 puts 'sleeping for 30s...'
             else
@@ -182,7 +176,7 @@ helpers do
         if GLOBAL[:running] or merge_on_fail
             description = "This PR is old enough to merge."
             @client.create_status(repo, ref, 'success', :context => context, :description => description)
-            puts "#{repo}/#{pull_request['head']['sha']}: #{description}"
+            # puts "#{repo}/#{pull_request['head']['sha']}: #{description}"
         end
     end
 end
