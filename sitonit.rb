@@ -142,10 +142,10 @@ helpers do
                 config = YAML.load(body)
                 days = (
                     (
-                        (config.fetch('minutes', 0).to_f / 60.0) + 
-                        config.fetch('hours', 0).to_f
+                        (config.fetch('minutes', config.fetch('minute', 0)).to_f / 60.0) + 
+                        config.fetch('hours', config.fetch('hour', 0)).to_f
                     ) / 24.0 +
-                    config.fetch('days', 0).to_f
+                    config.fetch('days', config.fetch('day', 0)).to_f
                 )
                 target = created + days
                 merge_on_fail = config.fetch('merge_on_fail', true)
