@@ -1,5 +1,5 @@
-minutes: 1
-hours: 1
-days: 1
+minutes: 30
+hours: 0
+days: 0
 
 merge_on_fail: true
