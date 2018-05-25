@@ -100,9 +100,8 @@ helpers do
                     puts "unknown encoding #{contents[:encoding]}"
                 end
                 config = YAML.load(body)
-                if ['minute', 'minutes', 'hour', 'hours', 'day', 'days'].any?(&config.has_key) { |key|
-                    config.has_key? key
-                }
+                use_default_time = true
+                if ['minute', 'minutes', 'hour', 'hours', 'day', 'days'].any?(&config.method(:has_key?))
                     days = (
                         (
                             (config.fetch('minutes', config.fetch('minute', 0)).to_f / 60.0) + 
@@ -112,6 +111,8 @@ helpers do
                     )
                 else
                     days = TIME_TO_MERGE_DAYS
+                end
+                days = 0 if days < 0
                 created = DateTime.strptime(pull_request['updated_at']) if config.fetch('reset_on_update', false)
                 target = created + days
                 merge_on_fail = config.fetch('merge_on_fail', true)
