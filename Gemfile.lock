@@ -19,7 +19,7 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    sinatra (2.0.1)
+    sinatra (2.0.2)
       mustermann (~> 1.0)
       rack (~> 2.0)
       rack-protection (= 2.0.1)
@@ -36,7 +36,7 @@ PLATFORMS
 DEPENDENCIES
   jwt
   octokit (= 4.9.0)
-  sinatra (= 2.0.1)
+  sinatra (= 2.0.2)
   thin
 
 BUNDLED WITH
